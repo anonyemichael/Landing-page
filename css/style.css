@@ -340,7 +340,7 @@ input:focus, textarea:focus {
 @media (max-width: 768px) {
 
   .navcontent {
-    /* This stays the same: keeps logo and icon separate */
+  
     flex-direction: row; 
     justify-content: space-between;
     width: 100%;
@@ -349,46 +349,40 @@ input:focus, textarea:focus {
   /* Show the hamburger icon */
   .menu-icon {
     display: block;
-    z-index: 3001; /* Keep icon on top */
+    z-index: 3001; 
   }
 
   /* --- The NEW Side-Drawer Menu --- */
   .navlinks {
-    position: fixed; /* Stays in place even if you scroll */
+    position: fixed;
     top: 0;
     
-    /* 1. HIDE THE MENU off-screen to the left */
+    
     left: -100%;
     
-    width: 70%; /* Menu takes up 70% of the screen width */
-    max-width: 280px; /* ...but not more than 280px */
-    height: 100vh; /* Full screen height */
+    width: 70%; 
+    max-width: 280px; 
+    height: 100vh;
     
     background: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     
     /* Style links for vertical menu */
     flex-direction: column;
-    align-items: flex-start; /* Align links to the left */
-    justify-content: flex-start; /* Start links from the top */
+    align-items: flex-start; 
+    justify-content: flex-start; 
     gap: 0;
     
-    padding-top: 80px; /* Space for the top */
-    z-index: 3000; /* Sits on top of all content */
-    
-    /* This is the slide animation */
+    padding-top: 80px; 
+    z-index: 3000; 
     transition: left 0.4s ease-in-out;
-    
-    /* Remove old properties */
     overflow: visible; 
   }
 
   /* --- This is the class JavaScript adds --- */
   .navlinks.active {
-    /* 2. SHOW THE MENU by sliding it in */
-    left: 0;
     
-    /* Remove old properties */
+    left: 0;
     height: 100vh; 
     padding-bottom: 0;
   }
@@ -399,16 +393,18 @@ input:focus, textarea:focus {
   }
 
   .navlinks li a {
-    /* Give links more space and make them full-width */
     display: block;
     padding: 1rem 1.5rem;
   }
 
-  /* --- Other Mobile Fixes (Same as before) --- */
+  /* --- Other Mobile Fixes --- */
   .herocontent h2 {
     font-size: 2.3rem;
   }
-
+.aboutcontent p {
+    text-align: center;
+    margin-left: 0;
+  }
   .aboutcontent {
     grid-template-columns: 1fr;
   }
@@ -416,4 +412,5 @@ input:focus, textarea:focus {
   .about, .services, .gallery, .contact {
     padding: 60px 20px;
   }
+  
 }
