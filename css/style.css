@@ -61,7 +61,7 @@ h1, h2, h3 {
   margin: 0 auto;
   padding: 0.8rem 1rem;
   display: flex;
-  justify-content: space-between; /* Logo left, links center */
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -79,9 +79,9 @@ h1, h2, h3 {
    NAV LINKS
    ============================ */
 .navlinks {
-  flex: 1; /* Allow links to occupy remaining space */
+  flex: 1;
   display: flex;
-  justify-content: center; /* Center the links */
+  justify-content: center;
   gap: 50px;
   list-style: none;
   margin: 0;
@@ -116,10 +116,13 @@ h1, h2, h3 {
 }
 
 /* ============================
-   HERO SECTION
+   HERO SECTION (UPDATED FOR SLIDER)
    ============================ */
 .hero {
-  background: url("https://moc.gov.gh/wp-content/uploads/2021/06/BG-1.jpg") center/cover no-repeat;
+  /* Removed static background image */
+  background-color: #002b5b; /* Fallback color */
+  position: relative; /* Needed for the slider absolute position */
+  overflow: hidden;   /* Keeps zoom effect inside the box */
   height: 80vh;
   display: flex;
   align-items: center;
@@ -129,18 +132,62 @@ h1, h2, h3 {
 
 .herocontent {
   max-width: 700px;
+  position: relative;
+  z-index: 2; /* Ensures text stays on top of images */
 }
 
 .herocontent h2 {
   font-size: 2.8rem;
   margin-bottom: 0.8rem;
   color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Added for readability */
 }
 
 .herocontent p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
+  /* Ensure paragraph text is white if it wasn't already */
+  color: #f1f5f9; 
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
+
+/* --- NEW SLIDER CSS --- */
+.hero-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; 
+}
+
+.hero-slider div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0; 
+  animation: slideAnimation 20s infinite; 
+  /* Adds a dark blue tint overlay so text is readable */
+  box-shadow: inset 0 0 0 2000px rgba(0, 43, 91, 0.4); 
+}
+
+/* Individual Image Delays */
+.hero-slider div:nth-child(1) { animation-delay: 0s; }
+.hero-slider div:nth-child(2) { animation-delay: 5s; }
+.hero-slider div:nth-child(3) { animation-delay: 10s; }
+.hero-slider div:nth-child(4) { animation-delay: 15s; }
+
+/* The Animation Keyframes */
+@keyframes slideAnimation {
+  0% { opacity: 0; transform: scale(1); }
+  5% { opacity: 1; }       
+  25% { opacity: 1; }      
+  30% { opacity: 0; transform: scale(1.1); } 
+  100% { opacity: 0; }
+}
+/* ---------------------- */
 
 /* ============================
    ABOUT
@@ -183,7 +230,6 @@ h1, h2, h3 {
   background: #f1f5f9;
   padding: 80px 20px;
   text-align: center;
-  /* Necessary for 3D space */
   perspective: 1500px; 
 }
 
@@ -197,59 +243,47 @@ h1, h2, h3 {
   margin: 40px auto 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px; /* Slightly bigger gap for 3D movement */
+  gap: 30px; 
 }
 
 .card {
   background: #fff;
-  border-radius: 16px; /* Smoother corners */
+  border-radius: 16px; 
   padding: 2.5rem 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 43, 91, 0.08); /* Slight blue tint to shadow */
-  /* The magic transition for smooth 3D movement and color change */
+  box-shadow: 0 4px 15px rgba(0, 43, 91, 0.08); 
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   z-index: 1;
-  /* Ensures elements inside rotate with the card */
   transform-style: preserve-3d; 
 }
 
-/* Elements that will change color */
 .card h3, .card p {
     transition: color 0.4s ease;
-    /* Pushes text slightly forward in 3D space for depth */
     transform: translateZ(20px); 
 }
 
 .card i {
   font-size: 3.5rem;
-  color: #0057b8; /* Bright blue initially */
+  color: #0057b8; 
   margin-bottom: 1.5rem;
   display: inline-block;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  /* Pushes icon further forward */
   transform: translateZ(30px); 
 }
 
-/* --- HOVER STATE: THE FLIP & CHANGE --- */
 .card:hover {
-  /* Lifts up and tilts on the Y and X axis slightly */
   transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.03);
-  /* Changes to deep GI-KACE blue */
   background: #002b5b; 
-  /* Deep, realistic shadow created by the lift */
   box-shadow: -20px 30px 40px rgba(0, 10, 30, 0.4);
 }
 
-/* Invert text color to white */
 .card:hover h3, 
 .card:hover p {
     color: #ffffff; 
 }
 
-/* Icon turns Gold and spins */
 .card:hover i {
     color: #ffd700;
-    /* Counter-rotates slightly so it always faces the user, while spinning */
     transform: translateZ(50px) rotateY(-10deg) rotate(360deg); 
 }
 
@@ -260,7 +294,6 @@ h1, h2, h3 {
   padding: 80px 20px;
   text-align: center;
   background: #fff;
-  /* Creates the 3D space for the images */
   perspective: 1200px; 
 }
 .gallery h2 {
@@ -272,40 +305,30 @@ h1, h2, h3 {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  /* Slightly larger minimum width for better impact */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
 }
 
 .gallerygrid img {
   width: 100%;
-  height: 260px; /* Taller images */
+  height: 260px; 
   object-fit: cover;
   border-radius: 12px;
-  
-  /* INITIAL STATE: Tilted back, Greyscale, Darker */
   filter: grayscale(100%) brightness(0.8);
   opacity: 0.9;
-  /* Tilted back 15 degrees on X axis */
   transform: rotateX(15deg) scale(0.95);
-  box-shadow: 0 15px 15px -10px rgba(0,0,0,0.3); /* Shadow sits under the tilt */
-  
-  /* Smooth, snappy transition */
+  box-shadow: 0 15px 15px -10px rgba(0,0,0,0.3); 
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
 }
 
-/* HOVER STATE: UNFOLD & POWER ON */
 .gallerygrid img:hover {
-  /* Full Color, Full brightness */
   filter: grayscale(0%) brightness(1);
   opacity: 1;
-  /* Unfolds flat (rotateX 0), lifts up, and zooms in */
   transform: rotateX(0deg) translateY(-20px) scale(1.08);
-  /* Big, soft shadow showing height */
   box-shadow: 0 30px 50px -15px rgba(0, 43, 91, 0.4);
-  z-index: 10; /* Ensures it overlaps neighbors */
-  outline: 3px solid #ffd700; /* A subtle gold glowing border */
+  z-index: 10; 
+  outline: 3px solid #ffd700; 
   outline-offset: -3px;
 }
 
@@ -376,7 +399,7 @@ input:focus, textarea:focus {
    NEW MENU ICON (for desktop)
    ============================ */
 .menu-icon {
-  display: none; /* Hide icon on desktop */
+  display: none; 
   font-size: 1.8rem;
   color: #002b5b;
   cursor: pointer;
@@ -385,8 +408,6 @@ input:focus, textarea:focus {
 /* ============================
    RESPONSIVE MEDIA QUERIES
    ============================ */
-
-/* Tablet & Mobile View */
 @media (max-width: 768px) {
 
   .navcontent {
@@ -395,13 +416,11 @@ input:focus, textarea:focus {
     width: 100%;
   }
 
-  /* Show the hamburger icon */
   .menu-icon {
     display: block;
     z-index: 3001; 
   }
 
-  /* --- The NEW Side-Drawer Menu --- */
   .navlinks {
     position: fixed;
     top: 0;
@@ -411,20 +430,16 @@ input:focus, textarea:focus {
     height: 100vh;
     background: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    
-    /* Style links for vertical menu */
     flex-direction: column;
     align-items: flex-start; 
     justify-content: flex-start; 
     gap: 0;
-    
     padding-top: 80px; 
     z-index: 3000; 
     transition: left 0.4s ease-in-out;
     overflow: visible; 
   }
 
-  /* --- This is the class JavaScript adds --- */
   .navlinks.active {
     left: 0;
     height: 100vh; 
@@ -441,7 +456,6 @@ input:focus, textarea:focus {
     padding: 1rem 1.5rem;
   }
 
-  /* --- Other Mobile Fixes --- */
   .herocontent h2 {
     font-size: 2.3rem;
   }
@@ -453,19 +467,18 @@ input:focus, textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  /* On mobile, tone down the 3D effects slightly for better usability */
   .servicecards, .gallery {
       perspective: none;
   }
   .card:hover {
-      transform: translateY(-10px) scale(1.02); /* Simple lift on mobile */
+      transform: translateY(-10px) scale(1.02); 
   }
   .gallerygrid img {
-      transform: none; /* No initial tilt on mobile */
-      filter: grayscale(0%); /* Color on mobile by default */
+      transform: none; 
+      filter: grayscale(0%); 
   }
    .gallerygrid img:hover {
-      transform: scale(1.05); /* Simple zoom on mobile */
+      transform: scale(1.05); 
   }
 
   .about, .services, .gallery, .contact {
@@ -473,7 +486,7 @@ input:focus, textarea:focus {
   }
   
 }
-/* Active nav underline + color */
+
 .navlinks a.active {
   color: var(--primer-color);
 }
