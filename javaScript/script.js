@@ -58,7 +58,7 @@ if (form) {
     let valid = true;
 
     // ===== Name Validation =====
-    const namePattern = /^[a-zA-Z\s]+$/;
+    const namePattern = /^[a-zA-Z\s]+$/; // regex 
     if (nameInput.value.trim().length < 2 || !namePattern.test(nameInput.value.trim())) {
       nameError.textContent = "Name must be at least 2 letters and contain only alphabets.";
       nameInput.style.border = '2px solid red';
